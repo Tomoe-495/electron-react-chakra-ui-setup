@@ -1,5 +1,4 @@
 import React from 'react';
-import {  BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import {
   ChakraProvider,
   Box,
@@ -9,43 +8,50 @@ import {
 } from '@chakra-ui/react';
 import { ColorModeSwitcher } from './ColorModeSwitcher';
 
+const { pathname } = window.location;
+
+console.log(pathname);
+
+
 function Container(){
   return (
     <>
     <Text>Jeloo!!</Text>
     <Button>
-      <Link to="/about">go to</Link>
+      <a href="/about">About</a>
     </Button>
     </>
   )
 }
 
 function About(){
-  return(
+  return (
     <>
-    <Text>About@</Text>
+    <Text>About!!</Text>
     <Button>
-      <Link to="/">Go to</Link>
+      <a href="/">Home</a>
     </Button>
     </>
   )
 }
 
+function Pages(){
+  if (pathname === "/"){
+    return <Container />;
+  }else if(pathname === "/about"){
+    return <About />;
+  }
+}
+
 
 function App() {
   return (
-    <Router>
-      <ChakraProvider theme={theme}>
-        <Box textAlign="center" fontSize="xl">
-            <ColorModeSwitcher justifySelf="flex-end" />
-            <Routes>
-              <Route exact path='/' element={<Container />} />
-              <Route path="/about" element={<About />} />
-            </Routes>
-
-        </Box>
-      </ChakraProvider>
-    </Router>
+    <ChakraProvider theme={theme}>
+      <Box textAlign="center" fontSize="xl">
+          <ColorModeSwitcher pos="fixed" right="1" top="1" />
+          <Pages />
+      </Box>
+    </ChakraProvider>
   );
 }
 
